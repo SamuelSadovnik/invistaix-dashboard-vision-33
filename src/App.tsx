@@ -7,11 +7,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
+import Previews from "./pages/Previews";
 import Properties from "./pages/Properties";
 import PropertyDetail from "./pages/PropertyDetail";
 import Owners from "./pages/Owners";
 import Managers from "./pages/Managers";
 import Financial from "./pages/Financial";
+import Performance from "./pages/Performance";
+import Reports from "./pages/Reports";
 import NotFound from "./pages/NotFound";
 import Index from "./pages/Index";
 
@@ -28,11 +31,14 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<Dashboard />} />
+              <Route path="vistorias" element={<Previews />} />
               <Route path="imoveis" element={<Properties />} />
               <Route path="imoveis/:id" element={<PropertyDetail />} />
               <Route path="proprietarios" element={<Owners />} />
               <Route path="gestores" element={<Managers />} />
               <Route path="financeiro" element={<Financial />} />
+              <Route path="performance" element={<Performance />} />
+              <Route path="relatorios" element={<Reports />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

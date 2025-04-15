@@ -4,14 +4,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { 
   LayoutDashboard, 
-  Home, 
+  Home,
+  ClipboardCheck,
   Users, 
   UserPlus, 
   DollarSign, 
   BarChart3, 
-  FileText, 
-  Settings,
-  LogOut
+  FileText
 } from 'lucide-react';
 
 const Sidebar = () => {
@@ -20,37 +19,42 @@ const Sidebar = () => {
   const menuItems = [
     { 
       title: "Dashboard", 
-      path: "/", 
+      path: "/dashboard", 
       icon: <LayoutDashboard className="h-5 w-5" /> 
     },
     { 
+      title: "Vistorias", 
+      path: "/dashboard/vistorias", 
+      icon: <ClipboardCheck className="h-5 w-5" /> 
+    },
+    { 
       title: "Imóveis", 
-      path: "/imoveis", 
+      path: "/dashboard/imoveis", 
       icon: <Home className="h-5 w-5" /> 
     },
     { 
       title: "Proprietários", 
-      path: "/proprietarios", 
+      path: "/dashboard/proprietarios", 
       icon: <Users className="h-5 w-5" /> 
     },
     { 
       title: "Gestores", 
-      path: "/gestores", 
+      path: "/dashboard/gestores", 
       icon: <UserPlus className="h-5 w-5" /> 
     },
     { 
       title: "Financeiro", 
-      path: "/financeiro", 
+      path: "/dashboard/financeiro", 
       icon: <DollarSign className="h-5 w-5" /> 
     },
     { 
       title: "Performance", 
-      path: "/performance", 
+      path: "/dashboard/performance", 
       icon: <BarChart3 className="h-5 w-5" /> 
     },
     { 
       title: "Relatórios", 
-      path: "/relatorios", 
+      path: "/dashboard/relatorios", 
       icon: <FileText className="h-5 w-5" /> 
     }
   ];
