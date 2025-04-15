@@ -12,29 +12,33 @@ import Owners from "./pages/Owners";
 import Managers from "./pages/Managers";
 import Financial from "./pages/Financial";
 import NotFound from "./pages/NotFound";
+import Index from "./pages/Index";
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<DashboardLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="imoveis" element={<Properties />} />
-            <Route path="imoveis/:id" element={<PropertyDetail />} />
-            <Route path="proprietarios" element={<Owners />} />
-            <Route path="gestores" element={<Managers />} />
-            <Route path="financeiro" element={<Financial />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="imoveis" element={<Properties />} />
+              <Route path="imoveis/:id" element={<PropertyDetail />} />
+              <Route path="proprietarios" element={<Owners />} />
+              <Route path="gestores" element={<Managers />} />
+              <Route path="financeiro" element={<Financial />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </React.StrictMode>
 );
 
 export default App;
