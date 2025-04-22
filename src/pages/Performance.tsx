@@ -27,7 +27,8 @@ import { properties, incomeData, expenseData, resultData } from '@/data/mockData
 
 const Performance = () => {
   const totalProperties = properties.length;
-  const occupiedProperties = properties.filter(p => p.status === 'Ocupado').length;
+  // Change from p.status to check for rentValue to determine if property is occupied
+  const occupiedProperties = properties.filter(p => p.rentValue !== undefined).length;
   const occupancyRate = ((occupiedProperties / totalProperties) * 100).toFixed(1);
 
   return (
