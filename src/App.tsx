@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -17,6 +16,15 @@ import Performance from "./pages/Performance";
 import Reports from "./pages/Reports";
 import NotFound from "./pages/NotFound";
 import Index from "./pages/Index";
+import Imoveis from "./pages/Imoveis";
+import Vistorias from "./pages/Vistorias"; 
+import Proprietarios from "./pages/Proprietarios";
+import Gestores from "./pages/Gestores";
+import Performance from "./pages/Performance";
+import Financeiro from "./pages/Financeiro";
+import Relatorios from "./pages/Relatorios";
+import NotFound from "./pages/NotFound";
+import Index from "./pages/Index";
 
 const queryClient = new QueryClient();
 
@@ -31,14 +39,13 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<Dashboard />} />
-              <Route path="vistorias" element={<Previews />} />
-              <Route path="imoveis" element={<Properties />} />
-              <Route path="imoveis/:id" element={<PropertyDetail />} />
-              <Route path="proprietarios" element={<Owners />} />
-              <Route path="gestores" element={<Managers />} />
+              <Route path="vistorias" element={<Vistorias />} />
+              <Route path="imoveis" element={<Imoveis />} />
+              <Route path="proprietarios" element={<Proprietarios />} />
+              <Route path="gestores" element={<Gestores />} />
               <Route path="financeiro" element={<Financial />} />
               <Route path="performance" element={<Performance />} />
-              <Route path="relatorios" element={<Reports />} />
+              <Route path="relatorios" element={<Relatorios />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
