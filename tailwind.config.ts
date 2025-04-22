@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -26,7 +25,7 @@ export default {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
+          DEFAULT: 'hsl(var(--primary))', // Green
           foreground: 'hsl(var(--primary-foreground))'
         },
         secondary: {
@@ -63,14 +62,14 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))'
         },
+        // Main colors for black, white, and green
         invistaix: {
-          100: '#e9fde7',         // very light green
-          200: '#cdfbca',         // light green
-          300: '#12d87e',         // main green
-          400: '#0c9e48',         // dark green
-          500: '#072914',         // very dark
-          600: '#111111',         // black
-        }
+          100: '#fff',           // white
+          300: '#12d87e',        // green
+          400: '#0c9e48',        // dark green
+          500: '#000',           // black
+        },
+        // Remove additional color shades that aren't black/white/green
       },
       borderRadius: {
         lg: 'var(--radius)',
