@@ -10,7 +10,9 @@ import {
   UserPlus, 
   DollarSign, 
   BarChart3, 
-  FileText
+  FileText,
+  Settings,
+  LogOut
 } from 'lucide-react';
 
 const Sidebar = () => {
