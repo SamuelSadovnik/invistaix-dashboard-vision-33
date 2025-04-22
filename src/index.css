@@ -5,74 +5,57 @@
 
 @layer base {
   :root {
-    --background: 260 20% 99%;
-    --foreground: 222 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222 84% 4.9%;
-
+    --background: 0 0% 100%;          /* White background */
+    --foreground: 0 0% 5%;            /* Near-black text */
+    --card: 0 0% 98%;                 /* Slightly off-white card */
+    --card-foreground: 0 0% 5%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 84% 4.9%;
-
-    --primary: 260 68% 75%;
-    --primary-foreground: 210 20% 98%;
-
-    --secondary: 260 42% 54%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.9%;
-
-    --accent: 260 40% 96.1%;
-    --accent-foreground: 260 42% 54%;
-
+    --popover-foreground: 0 0% 5%;
+    --primary: 140 80% 32%;           /* Strong green */
+    --primary-foreground: 0 0% 100%;  /* White text on green */
+    --secondary: 120 56% 90%;         /* Soft greenish background */
+    --secondary-foreground: 0 0% 5%;
+    --muted: 0 0% 90%;                /* Muted white */
+    --muted-foreground: 0 0% 45%;     /* Muted black */
+    --accent: 150 80% 89%;            /* Light green accent */
+    --accent-foreground: 140 65% 30%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 260 68% 75%;
-
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 80%;               /* Light grey border */
+    --input: 0 0% 88%;
+    --ring: 140 80% 32%;              /* Green focus ring */
     --radius: 0.5rem;
 
-    --sidebar-background: 260 30% 14.9%;
-    --sidebar-foreground: 263 75% 97%;
-    --sidebar-primary: 260 68% 75%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 261 25% 20%;
-    --sidebar-accent-foreground: 263 75% 97%;
-    --sidebar-border: 261 25% 20%;
-    --sidebar-ring: 260 68% 75%;
+    --sidebar-background: 0 0% 8%;                /* Deep black sidebar */
+    --sidebar-foreground: 0 0% 100%;              /* White text */
+    --sidebar-primary: 140 80% 32%;               /* Green primary */
+    --sidebar-primary-foreground: 0 0% 100%;      /* White on green */
+    --sidebar-accent: 140 64% 18%;                /* Very dark green */
+    --sidebar-accent-foreground: 140 68% 75%;     /* Light green foreground */
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 140 80% 32%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 263 75% 67%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
+    --background: 0 0% 5%;               /* Deep black */
+    --foreground: 0 0% 99%;              /* White text */
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 99%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 99%;
+    --primary: 140 80% 38%;              /* Green */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 140 16% 21%;            /* Dark greenish */
+    --secondary-foreground: 0 0% 99%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 140 28% 38%;               /* Muted green accent */
+    --accent-foreground: 0 0% 99%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 263 75% 67%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 18%;
+    --input: 0 0% 21%;
+    --ring: 140 80% 38%;
   }
 }
 
@@ -80,14 +63,13 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
   }
 }
 
 .invistaix-gradient {
-  background: linear-gradient(to right, #9b87f5, #7E69AB);
+  background: linear-gradient(to right, #12d87e, #54e69d);
 }
 
 .animate-fade-in {
