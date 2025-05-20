@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils';
 import { 
   LayoutDashboard, 
   Home,
-  ClipboardCheck,
   Users, 
   UserPlus, 
   DollarSign, 
@@ -23,11 +22,6 @@ const Sidebar = () => {
       title: "Dashboard", 
       path: "/dashboard", 
       icon: <LayoutDashboard className="h-5 w-5" /> 
-    },
-    { 
-      title: "Vistorias", 
-      path: "/dashboard/vistorias", 
-      icon: <ClipboardCheck className="h-5 w-5" /> 
     },
     { 
       title: "Imóveis", 

@@ -9,7 +9,6 @@ import DashboardLayout from "./components/layout/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import PropertyDetail from "./pages/PropertyDetail";
 import Imoveis from "./pages/Imoveis";
-import Vistorias from "./pages/Vistorias"; 
 import Proprietarios from "./pages/Proprietarios";
 import Gestores from "./pages/Gestores";
 import Financial from "./pages/Financial";
@@ -31,7 +30,6 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<Dashboard />} />
-              <Route path="vistorias" element={<Vistorias />} />
               <Route path="imoveis" element={<Imoveis />} />
               <Route path="imoveis/:id" element={<PropertyDetail />} />
               <Route path="proprietarios" element={<Proprietarios />} />
