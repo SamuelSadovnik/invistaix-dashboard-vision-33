@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -6,22 +7,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
-import Previews from "./pages/Previews";
-import Properties from "./pages/Properties";
 import PropertyDetail from "./pages/PropertyDetail";
-import Owners from "./pages/Owners";
-import Managers from "./pages/Managers";
-import Financial from "./pages/Financial";
-import Performance from "./pages/Performance";
-import Reports from "./pages/Reports";
-import NotFound from "./pages/NotFound";
-import Index from "./pages/Index";
 import Imoveis from "./pages/Imoveis";
 import Vistorias from "./pages/Vistorias"; 
 import Proprietarios from "./pages/Proprietarios";
 import Gestores from "./pages/Gestores";
+import Financial from "./pages/Financial";
 import Performance from "./pages/Performance";
-import Financeiro from "./pages/Financeiro";
 import Relatorios from "./pages/Relatorios";
 import NotFound from "./pages/NotFound";
 import Index from "./pages/Index";
@@ -41,6 +33,7 @@ const App = () => (
               <Route index element={<Dashboard />} />
               <Route path="vistorias" element={<Vistorias />} />
               <Route path="imoveis" element={<Imoveis />} />
+              <Route path="imoveis/:id" element={<PropertyDetail />} />
               <Route path="proprietarios" element={<Proprietarios />} />
               <Route path="gestores" element={<Gestores />} />
               <Route path="financeiro" element={<Financial />} />
