@@ -80,8 +80,13 @@ const Sidebar = () => {
 
       <div className="p-4 border-t border-sidebar-border">
         <Link
-          to="/configuracoes"
-          className="flex items-center px-4 py-3 text-sm rounded-md transition-colors text-sidebar-foreground hover:bg-sidebar-accent/50"
+          to="/dashboard/configuracoes"
+          className={cn(
+            "flex items-center px-4 py-3 text-sm rounded-md transition-colors",
+            location.pathname === "/dashboard/configuracoes"
+              ? "bg-sidebar-accent text-sidebar-primary font-medium"
+              : "text-sidebar-foreground hover:bg-sidebar-accent/50"
+          )}
         >
           <Settings className="h-5 w-5" />
           <span className="ml-3">Configurações</span>
