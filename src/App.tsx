@@ -14,7 +14,7 @@ import PropertyDetail from "./pages/PropertyDetail";
 import Imoveis from "./pages/Imoveis";
 import Proprietarios from "./pages/Proprietarios";
 import Gestores from "./pages/Gestores";
-import Financial from "./pages/Financial";
+import Financeiro from "./pages/Financeiro";
 import Performance from "./pages/Performance";
 import Configuracoes from "./pages/Configuracoes";
 import NotFound from "./pages/NotFound";
@@ -44,7 +44,7 @@ const App = () => (
                   <Route path="imoveis/:id" element={<PropertyDetail />} />
                   <Route path="proprietarios" element={<Proprietarios />} />
                   <Route path="gestores" element={<Gestores />} />
-                  <Route path="financeiro" element={<Financial />} />
+                  <Route path="financeiro" element={<Financeiro />} />
                   <Route path="performance" element={<Performance />} />
                   <Route path="configuracoes" element={<Configuracoes />} />
                 </Route>

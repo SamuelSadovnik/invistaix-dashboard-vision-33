@@ -73,6 +73,16 @@
   background: linear-gradient(to right, #000, #12d87e);
 }
 
+.cadastrar-button {
+  background: linear-gradient(135deg, #16a34a 0%, #059669 100%);
+  box-shadow: 0 4px 15px 0 rgba(5, 150, 105, 0.3);
+}
+
+.cadastrar-button:hover {
+  background: linear-gradient(135deg, #15803d 0%, #047857 100%);
+  box-shadow: 0 6px 20px 0 rgba(5, 150, 105, 0.4);
+}
+
 .animate-fade-in {
   animation: fade-in 0.3s ease-out forwards;
 }

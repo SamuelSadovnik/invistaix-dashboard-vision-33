@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
-import { LogIn, Building2 } from 'lucide-react';
+import { LogIn, Building2, Lock, User } from 'lucide-react';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -31,32 +31,38 @@ const Login = () => {
     if (success) {
       toast.success('Login realizado com sucesso!');
     } else {
-      toast.error('Credenciais inválidas. Use admin/admin');
+      toast.error('Credenciais inválidas');
     }
     
     setIsLoading(false);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-green-100 p-4">
-      <div className="w-full max-w-md">
-        <Card className="border-2 shadow-2xl bg-white/95 backdrop-blur-sm">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 p-4 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+      
+      <div className="w-full max-w-md relative z-10">
+        <Card className="border-0 shadow-2xl bg-white/95 backdrop-blur-xl">
           <CardHeader className="text-center space-y-6 pb-8">
-            <div className="mx-auto w-24 h-24 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center shadow-lg">
-              <Building2 className="h-12 w-12 text-white" />
+            <div className="mx-auto w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg ring-4 ring-green-100">
+              <Building2 className="h-10 w-10 text-white" />
             </div>
             <div>
-              <CardTitle className="text-3xl font-bold text-gray-900 mb-2">InvistaIX</CardTitle>
+              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-green-700 to-emerald-600 bg-clip-text text-transparent mb-2">
+                InvistaIX
+              </CardTitle>
               <CardDescription className="text-gray-600 text-lg">
                 Gestão Inteligente de Imóveis
               </CardDescription>
-              <div className="w-16 h-1 bg-gradient-to-r from-green-600 to-green-400 mx-auto mt-3 rounded-full"></div>
+              <div className="w-20 h-1 bg-gradient-to-r from-green-500 to-emerald-400 mx-auto mt-3 rounded-full"></div>
             </div>
           </CardHeader>
           <CardContent className="space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="username" className="text-gray-700 font-semibold">
+                <Label htmlFor="username" className="text-gray-700 font-semibold flex items-center gap-2">
+                  <User className="h-4 w-4 text-green-600" />
                   Usuário
                 </Label>
                 <Input
@@ -66,11 +72,12 @@ const Login = () => {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
-                  className="h-12 border-2 border-gray-200 focus:border-green-500 focus:ring-green-200 transition-all duration-200"
+                  className="h-12 border-2 border-gray-200 focus:border-green-500 focus:ring-green-200 transition-all duration-200 bg-white/90"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-gray-700 font-semibold">
+                <Label htmlFor="password" className="text-gray-700 font-semibold flex items-center gap-2">
+                  <Lock className="h-4 w-4 text-green-600" />
                   Senha
                 </Label>
                 <Input
@@ -80,12 +87,12 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="h-12 border-2 border-gray-200 focus:border-green-500 focus:ring-green-200 transition-all duration-200"
+                  className="h-12 border-2 border-gray-200 focus:border-green-500 focus:ring-green-200 transition-all duration-200 bg-white/90"
                 />
               </div>
               <Button
                 type="submit"
-                className="w-full h-12 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                className="w-full h-12 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 border-0"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -101,21 +108,8 @@ const Login = () => {
                 )}
               </Button>
             </form>
-            <div className="mt-8 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
-              <p className="text-sm text-gray-700 text-center">
-                <strong className="text-green-700">Credenciais de Acesso:</strong><br />
-                <span className="font-mono bg-white px-2 py-1 rounded border mx-1">admin</span> •
-                <span className="font-mono bg-white px-2 py-1 rounded border mx-1">admin</span>
-              </p>
-            </div>
           </CardContent>
         </Card>
-        
-        <div className="text-center mt-6">
-          <p className="text-sm text-gray-500">
-            Sistema de Gestão de Imóveis • InvistaIX © 2024
-          </p>
-        </div>
       </div>
     </div>
   );
