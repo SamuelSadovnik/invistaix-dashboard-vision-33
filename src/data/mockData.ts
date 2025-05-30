@@ -1,4 +1,3 @@
-
 export interface Property {
   id: string;
   name: string;
@@ -45,6 +44,7 @@ export interface Manager {
   document: string;
   email: string;
   phone: string;
+  role: string;
   properties: string[];
   isOwner?: boolean;
 }
@@ -192,6 +192,7 @@ export const managers: Manager[] = [
     document: '111.222.333-44',
     email: 'carlos@invistaix.com',
     phone: '(11) 97777-6666',
+    role: 'Gestor Sênior',
     properties: ['1', '2', '4']
   },
   {
@@ -200,6 +201,7 @@ export const managers: Manager[] = [
     document: '555.666.777-88',
     email: 'ana@invistaix.com',
     phone: '(11) 96666-5555',
+    role: 'Gestora de Portfólio',
     properties: ['3'],
     isOwner: true
   }
