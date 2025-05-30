@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Bell, Search, User } from 'lucide-react';
+import { Bell, User } from 'lucide-react';
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -9,20 +9,22 @@ import {
   DropdownMenuSeparator, 
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
 
 const Topbar = () => {
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    toast.success('Logout realizado com sucesso!');
+  };
+
   return (
     <header className="border-b bg-background px-4 py-3 flex items-center justify-between">
-      <div className="flex items-center w-full max-w-md">
-        <div className="relative w-full">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Pesquisar..."
-            className="w-full bg-background pl-9 focus-visible:ring-invistaix-300"
-          />
-        </div>
+      <div className="flex items-center">
+        <h2 className="text-lg font-semibold text-gray-800">Dashboard</h2>
       </div>
       
       <div className="flex items-center gap-4">
@@ -34,7 +36,7 @@ const Topbar = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-9 w-9 rounded-full">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-invistaix-300 text-white">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-green-600 text-white">
                 <User className="h-5 w-5" />
               </div>
             </Button>
@@ -45,7 +47,7 @@ const Topbar = () => {
             <DropdownMenuItem>Perfil</DropdownMenuItem>
             <DropdownMenuItem>Configurações</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Sair</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>Sair</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

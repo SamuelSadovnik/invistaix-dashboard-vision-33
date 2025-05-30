@@ -90,7 +90,7 @@ const Sidebar = () => {
         <Link
           to="/dashboard/configuracoes"
           className={cn(
-            "flex items-center px-4 py-3 text-sm rounded-md transition-colors",
+            "flex items-center px-4 py-3 text-sm rounded-md transition-colors mb-2",
             location.pathname === "/dashboard/configuracoes"
               ? "bg-sidebar-accent text-sidebar-primary font-medium"
               : "text-sidebar-foreground hover:bg-sidebar-accent/50"
@@ -101,7 +101,7 @@ const Sidebar = () => {
         </Link>
         <button 
           onClick={handleLogout}
-          className="w-full mt-2 flex items-center px-4 py-3 text-sm rounded-md transition-colors text-sidebar-foreground hover:bg-sidebar-accent/50"
+          className="w-full flex items-center px-4 py-3 text-sm rounded-md transition-colors text-sidebar-foreground hover:bg-sidebar-accent/50"
         >
           <LogOut className="h-5 w-5" />
           <span className="ml-3">Sair</span>
