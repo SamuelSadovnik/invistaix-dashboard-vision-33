@@ -36,13 +36,14 @@ import {
   DialogDescription, 
   DialogHeader, 
   DialogTitle, 
-  DialogTrigger,
-  DialogFooter
+  DialogTrigger
 } from '@/components/ui/dialog';
+import AddOwnerForm from '@/components/proprietarios/AddOwnerForm';
 
 export default function Proprietarios() {
   const [searchTerm, setSearchTerm] = useState('');
   const [ownerType, setOwnerType] = useState<string | undefined>(undefined);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   
   const filteredOwners = owners.filter(owner => {
     const matchesSearch = owner.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -53,6 +54,14 @@ export default function Proprietarios() {
     return matchesSearch && matchesType;
   });
 
+  const handleFormSuccess = () => {
+    setIsDialogOpen(false);
+  };
+
+  const handleTypeChange = (value: string) => {
+    setOwnerType(value === 'all' ? undefined : value);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
@@ -60,66 +69,21 @@ export default function Proprietarios() {
           <h1 className="text-2xl md:text-3xl font-bold">Proprietários</h1>
           <p className="text-muted-foreground">Gerencie os proprietários de imóveis</p>
         </div>
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="bg-primary text-primary-foreground">
               <Plus className="h-4 w-4 mr-2" />
               Cadastrar Proprietário
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px]">
+          <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Cadastrar Novo Proprietário</DialogTitle>
               <DialogDescription>
-                Preencha os dados do proprietário para adicioná-lo ao sistema.
+                Preencha os dados do proprietário e associe os imóveis que pertencem a ele.
               </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-1 gap-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Informações Pessoais</CardTitle>
-                    <CardDescription>Dados do proprietário</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div>
-                        <label htmlFor="type" className="block text-sm font-medium mb-1">Tipo</label>
-                        <Select>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecione o tipo" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="PF">Pessoa Física</SelectItem>
-                            <SelectItem value="PJ">Pessoa Jurídica</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-medium mb-1">Nome completo</label>
-                        <Input id="name" placeholder="Nome do proprietário" />
-                      </div>
-                      <div>
-                        <label htmlFor="document" className="block text-sm font-medium mb-1">CPF/CNPJ</label>
-                        <Input id="document" placeholder="000.000.000-00" />
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
-                        <Input id="email" type="email" placeholder="email@exemplo.com" />
-                      </div>
-                      <div>
-                        <label htmlFor="phone" className="block text-sm font-medium mb-1">Telefone</label>
-                        <Input id="phone" placeholder="(00) 00000-0000" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button variant="outline" className="mr-2">Cancelar</Button>
-              <Button>Salvar</Button>
-            </DialogFooter>
+            <AddOwnerForm onSuccess={handleFormSuccess} />
           </DialogContent>
         </Dialog>
       </div>
@@ -135,12 +99,12 @@ export default function Proprietarios() {
           />
         </div>
         <div className="flex gap-2">
-          <Select value={ownerType} onValueChange={setOwnerType}>
+          <Select value={ownerType || 'all'} onValueChange={handleTypeChange}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Tipo de pessoa" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Todos os tipos</SelectItem>
+              <SelectItem value="all">Todos os tipos</SelectItem>
               <SelectItem value="PF">Pessoa Física</SelectItem>
               <SelectItem value="PJ">Pessoa Jurídica</SelectItem>
             </SelectContent>
@@ -156,7 +120,7 @@ export default function Proprietarios() {
               <Card key={owner.id} className="hover:shadow-md transition-shadow">
                 <CardHeader className="pb-2">
                   <div className="flex justify-between items-start">
-                    <CardTitle>{owner.name}</CardTitle>
+                    <CardTitle className="text-lg">{owner.name}</CardTitle>
                     <Badge 
                       className={owner.type === 'PF' ? 'bg-invistaix-100 text-invistaix-400 hover:bg-invistaix-100' : 'bg-blue-100 text-blue-700 hover:bg-blue-100'}
                     >
@@ -172,25 +136,30 @@ export default function Proprietarios() {
                   <div className="space-y-2">
                     <div className="flex items-center text-sm">
                       <UserCheck className="h-4 w-4 mr-2 text-muted-foreground" />
-                      <span>{owner.document}</span>
+                      <span className="text-muted-foreground">{owner.document}</span>
                     </div>
                     <div className="flex items-center text-sm">
                       <Mail className="h-4 w-4 mr-2 text-muted-foreground" />
-                      <span>{owner.email}</span>
+                      <span className="text-muted-foreground">{owner.email}</span>
                     </div>
                     <div className="flex items-center text-sm">
                       <Phone className="h-4 w-4 mr-2 text-muted-foreground" />
-                      <span>{owner.phone}</span>
+                      <span className="text-muted-foreground">{owner.phone}</span>
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter className="flex justify-end gap-2">
-                  <Button variant="ghost" size="icon">
-                    <Edit className="h-4 w-4" />
+                <CardFooter className="flex justify-between">
+                  <Button variant="outline" size="sm">
+                    Ver Detalhes
                   </Button>
-                  <Button variant="ghost" size="icon" className="text-destructive">
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+                  <div className="flex gap-1">
+                    <Button variant="ghost" size="icon">
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </CardFooter>
               </Card>
             );
