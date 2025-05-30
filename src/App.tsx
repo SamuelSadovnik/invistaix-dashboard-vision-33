@@ -13,7 +13,6 @@ import Proprietarios from "./pages/Proprietarios";
 import Gestores from "./pages/Gestores";
 import Financial from "./pages/Financial";
 import Performance from "./pages/Performance";
-import Relatorios from "./pages/Relatorios";
 import NotFound from "./pages/NotFound";
 import Index from "./pages/Index";
 
@@ -36,7 +35,6 @@ const App = () => (
               <Route path="gestores" element={<Gestores />} />
               <Route path="financeiro" element={<Financial />} />
               <Route path="performance" element={<Performance />} />
-              <Route path="relatorios" element={<Relatorios />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

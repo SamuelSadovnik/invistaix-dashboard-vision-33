@@ -8,8 +8,7 @@ import {
   Users, 
   UserPlus, 
   DollarSign, 
-  BarChart3, 
-  FileText,
+  BarChart3,
   Settings,
   LogOut
 } from 'lucide-react';
@@ -47,11 +46,6 @@ const Sidebar = () => {
       title: "Performance", 
       path: "/dashboard/performance", 
       icon: <BarChart3 className="h-5 w-5" /> 
-    },
-    { 
-      title: "Relatórios", 
-      path: "/dashboard/relatorios", 
-      icon: <FileText className="h-5 w-5" /> 
     }
   ];
   
