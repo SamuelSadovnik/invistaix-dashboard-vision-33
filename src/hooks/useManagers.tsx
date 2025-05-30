@@ -9,7 +9,7 @@ export interface Manager {
   phone: string;
   role: string;
   properties: string[];
-  isOwner: boolean;
+  isOwner?: boolean;
 }
 
 export const useManagers = () => {
