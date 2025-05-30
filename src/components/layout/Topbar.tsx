@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Bell, User } from 'lucide-react';
+import { User, Settings, LogOut } from 'lucide-react';
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -28,32 +29,57 @@ const Topbar = () => {
   };
 
   return (
-    <header className="border-b bg-background px-4 py-3 flex items-center justify-between">
+    <header className="border-b bg-background px-4 py-3 flex items-center justify-end">
       <div className="flex items-center">
-        <h2 className="text-lg font-semibold text-gray-800">Dashboard</h2>
-      </div>
-      
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="h-5 w-5" />
-          <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full"></span>
-        </Button>
-        
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-9 w-9 rounded-full">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-green-600 text-white">
-                <User className="h-5 w-5" />
-              </div>
+            <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:bg-accent">
+              <Avatar className="h-9 w-9">
+                <AvatarImage src="" alt="Admin" />
+                <AvatarFallback className="bg-gradient-to-br from-green-500 to-green-600 text-white font-semibold">
+                  AD
+                </AvatarFallback>
+              </Avatar>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+          <DropdownMenuContent align="end" className="w-64">
+            <DropdownMenuLabel className="font-normal">
+              <div className="flex flex-col space-y-2">
+                <div className="flex items-center space-x-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src="" alt="Admin" />
+                    <AvatarFallback className="bg-gradient-to-br from-green-500 to-green-600 text-white text-sm">
+                      AD
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col">
+                    <p className="text-sm font-medium leading-none">Administrator</p>
+                    <p className="text-xs leading-none text-muted-foreground mt-1">
+                      admin@invistaix.com
+                    </p>
+                  </div>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  <p>Usuário: ADMIN</p>
+                  <p>Tipo: Administrador</p>
+                  <p>Status: Ativo</p>
+                </div>
+              </div>
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Perfil</DropdownMenuItem>
-            <DropdownMenuItem onClick={handleConfigClick}>Configurações</DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
+              <User className="mr-2 h-4 w-4" />
+              <span>Perfil</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleConfigClick} className="cursor-pointer">
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Configurações</span>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>Sair</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600 focus:text-red-600">
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Sair</span>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
