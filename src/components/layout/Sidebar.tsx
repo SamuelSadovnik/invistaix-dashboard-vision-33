@@ -2,6 +2,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
 import { 
   LayoutDashboard, 
   Home,
@@ -15,6 +17,7 @@ import {
 
 const Sidebar = () => {
   const location = useLocation();
+  const { logout } = useAuth();
   
   const menuItems = [
     { 
@@ -48,6 +51,11 @@ const Sidebar = () => {
       icon: <BarChart3 className="h-5 w-5" /> 
     }
   ];
+
+  const handleLogout = () => {
+    logout();
+    toast.success('Logout realizado com sucesso!');
+  };
   
   return (
     <aside className="bg-sidebar w-full md:w-64 md:min-h-screen flex flex-col">
@@ -91,7 +99,10 @@ const Sidebar = () => {
           <Settings className="h-5 w-5" />
           <span className="ml-3">Configurações</span>
         </Link>
-        <button className="w-full mt-2 flex items-center px-4 py-3 text-sm rounded-md transition-colors text-sidebar-foreground hover:bg-sidebar-accent/50">
+        <button 
+          onClick={handleLogout}
+          className="w-full mt-2 flex items-center px-4 py-3 text-sm rounded-md transition-colors text-sidebar-foreground hover:bg-sidebar-accent/50"
+        >
           <LogOut className="h-5 w-5" />
           <span className="ml-3">Sair</span>
         </button>
