@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Users, 
@@ -114,7 +113,7 @@ export default function Proprietarios() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-primary text-primary-foreground">
+            <Button>
               <Plus className="h-4 w-4 mr-2" />
               Cadastrar Proprietário
             </Button>
