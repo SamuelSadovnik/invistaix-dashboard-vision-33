@@ -29,7 +29,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { owners, properties } from '@/data/mockData';
+import { properties } from '@/data/mockData';
 import { 
   Dialog, 
   DialogContent, 
@@ -39,11 +39,31 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog';
 import AddOwnerForm from '@/components/proprietarios/AddOwnerForm';
+import { EditOwnerDialog } from '@/components/proprietarios/EditOwnerDialog';
+import { OwnerDetailsDialog } from '@/components/proprietarios/OwnerDetailsDialog';
+import { DeleteOwnerDialog } from '@/components/proprietarios/DeleteOwnerDialog';
+import { useOwners } from '@/hooks/useOwners';
+import { toast } from 'sonner';
 
 export default function Proprietarios() {
   const [searchTerm, setSearchTerm] = useState('');
   const [ownerType, setOwnerType] = useState<string | undefined>(undefined);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editDialog, setEditDialog] = useState<{ isOpen: boolean; owner: any }>({
+    isOpen: false,
+    owner: null,
+  });
+  const [detailsDialog, setDetailsDialog] = useState<{ isOpen: boolean; owner: any }>({
+    isOpen: false,
+    owner: null,
+  });
+  const [deleteDialog, setDeleteDialog] = useState<{ isOpen: boolean; ownerId: string; ownerName: string }>({
+    isOpen: false,
+    ownerId: '',
+    ownerName: '',
+  });
+  
+  const { owners, addOwner, updateOwner, deleteOwner } = useOwners();
   
   const filteredOwners = owners.filter(owner => {
     const matchesSearch = owner.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -60,6 +80,29 @@ export default function Proprietarios() {
 
   const handleTypeChange = (value: string) => {
     setOwnerType(value === 'all' ? undefined : value);
+  };
+
+  const handleEditClick = (owner: any) => {
+    setEditDialog({ isOpen: true, owner });
+  };
+
+  const handleDetailsClick = (owner: any) => {
+    setDetailsDialog({ isOpen: true, owner });
+  };
+
+  const handleDeleteClick = (ownerId: string, ownerName: string) => {
+    setDeleteDialog({ isOpen: true, ownerId, ownerName });
+  };
+
+  const handleUpdateOwner = (data: any) => {
+    updateOwner(editDialog.owner.id, data);
+    setEditDialog({ isOpen: false, owner: null });
+  };
+
+  const handleDeleteConfirm = () => {
+    deleteOwner(deleteDialog.ownerId);
+    setDeleteDialog({ isOpen: false, ownerId: '', ownerName: '' });
+    toast.success('Proprietário excluído com sucesso!');
   };
 
   return (
@@ -149,14 +192,27 @@ export default function Proprietarios() {
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => handleDetailsClick(owner)}
+                  >
                     Ver Detalhes
                   </Button>
                   <div className="flex gap-1">
-                    <Button variant="ghost" size="icon">
+                    <Button 
+                      variant="ghost" 
+                      size="icon"
+                      onClick={() => handleEditClick(owner)}
+                    >
                       <Edit className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive">
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="text-destructive hover:text-destructive"
+                      onClick={() => handleDeleteClick(owner.id, owner.name)}
+                    >
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
@@ -174,6 +230,30 @@ export default function Proprietarios() {
           </div>
         )}
       </div>
+
+      {editDialog.owner && (
+        <EditOwnerDialog
+          isOpen={editDialog.isOpen}
+          onClose={() => setEditDialog({ isOpen: false, owner: null })}
+          owner={editDialog.owner}
+          onUpdate={handleUpdateOwner}
+        />
+      )}
+
+      {detailsDialog.owner && (
+        <OwnerDetailsDialog
+          isOpen={detailsDialog.isOpen}
+          onClose={() => setDetailsDialog({ isOpen: false, owner: null })}
+          owner={detailsDialog.owner}
+        />
+      )}
+
+      <DeleteOwnerDialog
+        isOpen={deleteDialog.isOpen}
+        onClose={() => setDeleteDialog({ isOpen: false, ownerId: '', ownerName: '' })}
+        onConfirm={handleDeleteConfirm}
+        ownerName={deleteDialog.ownerName}
+      />
     </div>
   );
 }

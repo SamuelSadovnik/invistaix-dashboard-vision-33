@@ -30,20 +30,29 @@ import {
 } from '@/components/ui/dialog';
 import { useManagers } from '@/hooks/useManagers';
 import { AddManagerForm } from '@/components/gestores/AddManagerForm';
+import { EditManagerDialog } from '@/components/gestores/EditManagerDialog';
+import { ManagerDetailsDialog } from '@/components/gestores/ManagerDetailsDialog';
 import { DeleteManagerDialog } from '@/components/gestores/DeleteManagerDialog';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 export default function Gestores() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [editDialog, setEditDialog] = useState<{ isOpen: boolean; manager: any }>({
+    isOpen: false,
+    manager: null,
+  });
+  const [detailsDialog, setDetailsDialog] = useState<{ isOpen: boolean; manager: any }>({
+    isOpen: false,
+    manager: null,
+  });
   const [deleteDialog, setDeleteDialog] = useState<{ isOpen: boolean; managerId: string; managerName: string }>({
     isOpen: false,
     managerId: '',
     managerName: '',
   });
   
-  const { managers, addManager, deleteManager } = useManagers();
-  const { toast } = useToast();
+  const { managers, addManager, updateManager, deleteManager } = useManagers();
   
   const filteredManagers = managers.filter(manager => {
     const matchesSearch = manager.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -55,10 +64,15 @@ export default function Gestores() {
   const handleAddManager = (data: any) => {
     addManager(data);
     setIsAddDialogOpen(false);
-    toast({
-      title: "Gestor adicionado",
-      description: `${data.name} foi adicionado com sucesso.`,
-    });
+    toast.success(`${data.name} foi adicionado com sucesso.`);
+  };
+
+  const handleEditClick = (manager: any) => {
+    setEditDialog({ isOpen: true, manager });
+  };
+
+  const handleDetailsClick = (manager: any) => {
+    setDetailsDialog({ isOpen: true, manager });
   };
 
   const handleDeleteClick = (managerId: string, managerName: string) => {
@@ -69,20 +83,15 @@ export default function Gestores() {
     });
   };
 
+  const handleUpdateManager = (data: any) => {
+    updateManager(editDialog.manager.id, data);
+    setEditDialog({ isOpen: false, manager: null });
+  };
+
   const handleDeleteConfirm = () => {
     deleteManager(deleteDialog.managerId);
     setDeleteDialog({ isOpen: false, managerId: '', managerName: '' });
-    toast({
-      title: "Gestor removido",
-      description: `${deleteDialog.managerName} foi removido com sucesso.`,
-    });
-  };
-
-  const handleEditClick = (managerId: string) => {
-    toast({
-      title: "Funcionalidade em desenvolvimento",
-      description: "A edição de gestores será implementada em breve.",
-    });
+    toast.success(`${deleteDialog.managerName} foi removido com sucesso.`);
   };
 
   return (
@@ -167,9 +176,16 @@ export default function Gestores() {
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
                         <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleDetailsClick(manager)}
+                        >
+                          Ver Detalhes
+                        </Button>
+                        <Button 
                           variant="ghost" 
                           size="icon"
-                          onClick={() => handleEditClick(manager.id)}
+                          onClick={() => handleEditClick(manager)}
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
@@ -202,6 +218,23 @@ export default function Gestores() {
           </TableBody>
         </Table>
       </div>
+
+      {editDialog.manager && (
+        <EditManagerDialog
+          isOpen={editDialog.isOpen}
+          onClose={() => setEditDialog({ isOpen: false, manager: null })}
+          manager={editDialog.manager}
+          onUpdate={handleUpdateManager}
+        />
+      )}
+
+      {detailsDialog.manager && (
+        <ManagerDetailsDialog
+          isOpen={detailsDialog.isOpen}
+          onClose={() => setDetailsDialog({ isOpen: false, manager: null })}
+          manager={detailsDialog.manager}
+        />
+      )}
 
       <DeleteManagerDialog
         isOpen={deleteDialog.isOpen}
