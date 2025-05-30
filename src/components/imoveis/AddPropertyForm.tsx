@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -72,8 +71,18 @@ const AddPropertyForm = ({ onSuccess }: AddPropertyFormProps) => {
       // Simular criação do imóvel
       const newProperty: Property = {
         id: Date.now().toString(),
-        ...data,
-        type: data.type as 'Casa' | 'Apartamento' | 'Comercial' | 'Terreno',
+        name: data.name,
+        type: data.type,
+        address: data.address,
+        matriculaValue: data.matriculaValue,
+        matriculaDate: data.matriculaDate,
+        rentValue: data.rentValue,
+        saleValue: data.saleValue,
+        taxValue: data.taxValue,
+        rooms: data.rooms,
+        bathrooms: data.bathrooms,
+        area: data.area,
+        owner: data.owner,
         performance: {
           percentage: 0,
           isPositive: true
