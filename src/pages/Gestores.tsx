@@ -5,8 +5,6 @@ import {
   Plus, 
   Search,
   Building,
-  Mail,
-  Phone,
   Edit,
   Trash2
 } from 'lucide-react';
@@ -21,7 +19,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { managers, properties } from '@/data/mockData';
+import { properties } from '@/data/mockData';
 import { 
   Dialog, 
   DialogContent, 
@@ -29,18 +27,23 @@ import {
   DialogHeader, 
   DialogTitle, 
   DialogTrigger,
-  DialogFooter
 } from '@/components/ui/dialog';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription
-} from '@/components/ui/card';
+import { useManagers } from '@/hooks/useManagers';
+import { AddManagerForm } from '@/components/gestores/AddManagerForm';
+import { DeleteManagerDialog } from '@/components/gestores/DeleteManagerDialog';
+import { useToast } from '@/hooks/use-toast';
 
 export default function Gestores() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState<{ isOpen: boolean; managerId: string; managerName: string }>({
+    isOpen: false,
+    managerId: '',
+    managerName: '',
+  });
+  
+  const { managers, addManager, deleteManager } = useManagers();
+  const { toast } = useToast();
   
   const filteredManagers = managers.filter(manager => {
     const matchesSearch = manager.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -49,6 +52,39 @@ export default function Gestores() {
     return matchesSearch;
   });
 
+  const handleAddManager = (data: any) => {
+    addManager(data);
+    setIsAddDialogOpen(false);
+    toast({
+      title: "Gestor adicionado",
+      description: `${data.name} foi adicionado com sucesso.`,
+    });
+  };
+
+  const handleDeleteClick = (managerId: string, managerName: string) => {
+    setDeleteDialog({
+      isOpen: true,
+      managerId,
+      managerName,
+    });
+  };
+
+  const handleDeleteConfirm = () => {
+    deleteManager(deleteDialog.managerId);
+    setDeleteDialog({ isOpen: false, managerId: '', managerName: '' });
+    toast({
+      title: "Gestor removido",
+      description: `${deleteDialog.managerName} foi removido com sucesso.`,
+    });
+  };
+
+  const handleEditClick = (managerId: string) => {
+    toast({
+      title: "Funcionalidade em desenvolvimento",
+      description: "A edição de gestores será implementada em breve.",
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
@@ -56,7 +92,7 @@ export default function Gestores() {
           <h1 className="text-2xl md:text-3xl font-bold">Gestores</h1>
           <p className="text-muted-foreground">Gerencie a equipe de gestores</p>
         </div>
-        <Dialog>
+        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
             <Button className="bg-primary text-primary-foreground">
               <Plus className="h-4 w-4 mr-2" />
@@ -70,48 +106,10 @@ export default function Gestores() {
                 Preencha os dados do gestor para adicioná-lo à equipe.
               </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-1 gap-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Informações Pessoais</CardTitle>
-                    <CardDescription>Dados do gestor</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-medium mb-1">Nome completo</label>
-                        <Input id="name" placeholder="Nome do gestor" />
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
-                        <Input id="email" type="email" placeholder="email@exemplo.com" />
-                      </div>
-                      <div>
-                        <label htmlFor="phone" className="block text-sm font-medium mb-1">Telefone</label>
-                        <Input id="phone" placeholder="(00) 00000-0000" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Acesso à Plataforma</CardTitle>
-                    <CardDescription>Defina as permissões de acesso</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <label htmlFor="role" className="block text-sm font-medium mb-1">Função</label>
-                      <Input id="role" placeholder="Gestor de portfólio" />
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button variant="outline" className="mr-2">Cancelar</Button>
-              <Button>Salvar</Button>
-            </DialogFooter>
+            <AddManagerForm 
+              onSubmit={handleAddManager}
+              onCancel={() => setIsAddDialogOpen(false)}
+            />
           </DialogContent>
         </Dialog>
       </div>
@@ -135,6 +133,7 @@ export default function Gestores() {
               <TableHead>Nome</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Telefone</TableHead>
+              <TableHead>Função</TableHead>
               <TableHead>Imóveis Gerenciados</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Ações</TableHead>
@@ -151,6 +150,7 @@ export default function Gestores() {
                     <TableCell className="font-medium">{manager.name}</TableCell>
                     <TableCell>{manager.email}</TableCell>
                     <TableCell>{manager.phone}</TableCell>
+                    <TableCell>{manager.role || 'Gestor'}</TableCell>
                     <TableCell>
                       <div className="flex items-center">
                         <Building className="h-4 w-4 mr-1 text-muted-foreground" />
@@ -166,10 +166,19 @@ export default function Gestores() {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
-                        <Button variant="ghost" size="icon">
+                        <Button 
+                          variant="ghost" 
+                          size="icon"
+                          onClick={() => handleEditClick(manager.id)}
+                        >
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="text-destructive">
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="text-destructive"
+                          onClick={() => handleDeleteClick(manager.id, manager.name)}
+                        >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -179,7 +188,7 @@ export default function Gestores() {
               })
             ) : (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-10">
+                <TableCell colSpan={7} className="text-center py-10">
                   <div className="flex flex-col items-center justify-center">
                     <UserPlus className="h-12 w-12 text-muted-foreground/50 mb-4" />
                     <h3 className="text-lg font-medium">Nenhum gestor encontrado</h3>
@@ -193,6 +202,13 @@ export default function Gestores() {
           </TableBody>
         </Table>
       </div>
+
+      <DeleteManagerDialog
+        isOpen={deleteDialog.isOpen}
+        onClose={() => setDeleteDialog({ isOpen: false, managerId: '', managerName: '' })}
+        onConfirm={handleDeleteConfirm}
+        managerName={deleteDialog.managerName}
+      />
     </div>
   );
 }
