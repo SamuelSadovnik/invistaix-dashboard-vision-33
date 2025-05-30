@@ -103,7 +103,7 @@ export default function Gestores() {
         </div>
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button className="invistaix-gradient">
               <Plus className="h-4 w-4 mr-2" />
               Cadastrar Gestor
             </Button>

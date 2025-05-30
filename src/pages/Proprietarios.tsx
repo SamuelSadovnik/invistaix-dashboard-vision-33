@@ -113,7 +113,7 @@ export default function Proprietarios() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button className="invistaix-gradient">
               <Plus className="h-4 w-4 mr-2" />
               Cadastrar Proprietário
             </Button>
