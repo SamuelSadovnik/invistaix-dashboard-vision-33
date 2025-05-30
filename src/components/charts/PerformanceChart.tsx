@@ -1,7 +1,12 @@
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { 
+  ChartContainer, 
+  ChartTooltip, 
+  ChartTooltipContent 
+} from '@/components/ui/chart';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { cn } from '@/lib/utils';
 
 interface PerformanceChartProps {
@@ -15,57 +20,80 @@ interface PerformanceChartProps {
   className?: string;
 }
 
+const chartConfig = {
+  value: {
+    label: "Valor",
+    color: "hsl(var(--chart-1))",
+  },
+}
+
 const PerformanceChart = ({
   title,
   description,
   data,
-  color = "#9b87f5",
+  color = "#22c55e",
   className,
 }: PerformanceChartProps) => {
+  const gradientId = `gradient-${title.replace(/\s+/g, '-').toLowerCase()}`;
+  
   return (
     <Card className={cn("animate-fade-in", className)}>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        {description && <CardDescription>{description}</CardDescription>}
+        <CardTitle className="text-lg font-semibold">{title}</CardTitle>
+        {description && <CardDescription className="text-sm text-muted-foreground">{description}</CardDescription>}
       </CardHeader>
       <CardContent className="pt-0">
-        <div className="h-80">
+        <ChartContainer config={chartConfig} className="h-80 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={data}
               margin={{
-                top: 10,
-                right: 10,
+                top: 20,
+                right: 20,
                 left: 0,
-                bottom: 0,
+                bottom: 20,
               }}
             >
               <defs>
-                <linearGradient id={`color-${title}`} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={color} stopOpacity={0.8} />
-                  <stop offset="95%" stopColor={color} stopOpacity={0.1} />
+                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={color} stopOpacity={0.8} />
+                  <stop offset="50%" stopColor={color} stopOpacity={0.3} />
+                  <stop offset="100%" stopColor={color} stopOpacity={0.05} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-              <YAxis tick={{ fontSize: 12 }} />
-              <Tooltip 
-                contentStyle={{ 
-                  borderRadius: '8px',
-                  border: '1px solid #e2e8f0',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-                }} 
+              <CartesianGrid 
+                strokeDasharray="3 3" 
+                stroke="hsl(var(--border))" 
+                strokeOpacity={0.3}
+                vertical={false}
+              />
+              <XAxis 
+                dataKey="name" 
+                tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
+                axisLine={false}
+                tickLine={false}
+                dy={10}
+              />
+              <YAxis 
+                tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
+                axisLine={false}
+                tickLine={false}
+                dx={-10}
+              />
+              <ChartTooltip
+                content={<ChartTooltipContent className="bg-background border border-border shadow-lg rounded-lg" />}
               />
               <Area
                 type="monotone"
                 dataKey="value"
                 stroke={color}
+                strokeWidth={3}
+                fill={`url(#${gradientId})`}
                 fillOpacity={1}
-                fill={`url(#color-${title})`}
               />
             </AreaChart>
           </ResponsiveContainer>
-        </div>
+        </ChartContainer>
       </CardContent>
     </Card>
   );

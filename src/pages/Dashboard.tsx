@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   Home, 
@@ -100,7 +99,10 @@ const Dashboard = () => {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card className="lg:col-span-2 animate-fade-in">
           <CardHeader>
-            <CardTitle>Índice INCC</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <TrendingUp className="h-5 w-5 text-blue-600" />
+              Índice INCC
+            </CardTitle>
             <CardDescription>Índice Nacional de Custo da Construção</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -108,13 +110,13 @@ const Dashboard = () => {
               {inccData.map((item, index) => (
                 <div 
                   key={index} 
-                  className={`p-3 rounded-md border ${
+                  className={`p-4 rounded-lg border transition-all duration-200 ${
                     index === inccData.length - 1 
-                      ? 'bg-invistaix-100 border-invistaix-300'
-                      : 'bg-card'
+                      ? 'bg-gradient-to-br from-green-50 to-green-100 border-green-300 shadow-sm'
+                      : 'bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 hover:shadow-sm'
                   }`}
                 >
-                  <p className="text-sm font-medium">{item.month}</p>
+                  <p className="text-sm font-medium text-gray-700">{item.month}</p>
                   <p className={`text-lg font-bold ${
                     item.value > 0 ? 'text-green-600' : 'text-red-600'
                   }`}>
@@ -123,47 +125,50 @@ const Dashboard = () => {
                 </div>
               ))}
             </div>
-            <div className="text-sm text-muted-foreground">
-              Fonte: FGV • Última atualização: 15 de Abril de 2025
+            <div className="text-sm text-muted-foreground bg-gray-50 p-3 rounded-lg">
+              📊 Fonte: FGV • Última atualização: 15 de Abril de 2025
             </div>
           </CardContent>
         </Card>
         
         <Card className="animate-fade-in">
           <CardHeader>
-            <CardTitle>Resumo Financeiro</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <DollarSign className="h-5 w-5 text-green-600" />
+              Resumo Financeiro
+            </CardTitle>
             <CardDescription>Visão geral do mês atual</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
+            <div className="space-y-3">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-muted-foreground">Receitas</span>
-                <span className="font-medium">R$ {totalIncome.toLocaleString()}</span>
+                <span className="text-muted-foreground font-medium">Receitas</span>
+                <span className="font-semibold text-green-600">R$ {totalIncome.toLocaleString()}</span>
               </div>
-              <div className="h-2 bg-muted rounded-full overflow-hidden">
-                <div className="h-full bg-green-500 rounded-full" style={{ width: '100%' }}></div>
+              <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full" style={{ width: '100%' }}></div>
               </div>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-3">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-muted-foreground">Despesas</span>
-                <span className="font-medium">R$ {totalExpenses.toLocaleString()}</span>
+                <span className="text-muted-foreground font-medium">Despesas</span>
+                <span className="font-semibold text-red-600">R$ {totalExpenses.toLocaleString()}</span>
               </div>
-              <div className="h-2 bg-muted rounded-full overflow-hidden">
+              <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-red-500 rounded-full" 
+                  className="h-full bg-gradient-to-r from-red-400 to-red-600 rounded-full" 
                   style={{ width: `${(totalExpenses / totalIncome) * 100}%` }}
                 ></div>
               </div>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-3">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-muted-foreground">Resultado</span>
-                <span className="font-medium text-green-600">R$ {result.toLocaleString()}</span>
+                <span className="text-muted-foreground font-medium">Resultado</span>
+                <span className="font-semibold text-blue-600">R$ {result.toLocaleString()}</span>
               </div>
-              <div className="h-2 bg-muted rounded-full overflow-hidden">
+              <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-invistaix-300 rounded-full" 
+                  className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full" 
                   style={{ width: `${(result / totalIncome) * 100}%` }}
                 ></div>
               </div>
@@ -177,64 +182,72 @@ const Dashboard = () => {
           title="Performance dos Imóveis" 
           description="Valorização com base no índice INCC"
           data={performanceData}
+          color="#3b82f6"
         />
         <PerformanceChart 
           title="Resultado Financeiro" 
           description="Receitas - Despesas"
           data={resultData}
-          color="#10b981"
+          color="#22c55e"
         />
       </div>
       
       <Card className="animate-fade-in">
         <CardHeader>
-          <CardTitle>Transações Recentes</CardTitle>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <LineChart className="h-5 w-5 text-purple-600" />
+            Transações Recentes
+          </CardTitle>
           <CardDescription>Últimas movimentações financeiras registradas</CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Data</TableHead>
-                <TableHead>Imóvel</TableHead>
-                <TableHead>Descrição</TableHead>
-                <TableHead>Categoria</TableHead>
-                <TableHead className="text-right">Valor</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {recentTransactions.map((transaction) => {
-                const property = properties.find(p => p.id === transaction.propertyId);
-                return (
-                  <TableRow key={transaction.id}>
-                    <TableCell>{new Date(transaction.date).toLocaleDateString('pt-BR')}</TableCell>
-                    <TableCell>{property?.name || 'N/A'}</TableCell>
-                    <TableCell>{transaction.description}</TableCell>
-                    <TableCell>
-                      <Badge 
-                        variant={transaction.type === 'income' ? 'default' : 'outline'} 
-                        className={
-                          transaction.type === 'income' 
-                            ? 'bg-green-100 text-green-800 hover:bg-green-100' 
-                            : 'text-red-800 border-red-200 bg-red-50'
-                        }
-                      >
-                        {transaction.category}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className={`text-right font-medium ${
-                      transaction.type === 'income' ? 'text-green-600' : 'text-red-600'
-                    }`}>
-                      {transaction.type === 'income' ? '+' : '-'}
-                      R$ {transaction.value.toLocaleString()}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-          <div className="mt-4 text-center">
-            <Button variant="outline">Ver todas as transações</Button>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-gray-50">
+                  <TableHead className="font-semibold">Data</TableHead>
+                  <TableHead className="font-semibold">Imóvel</TableHead>
+                  <TableHead className="font-semibold">Descrição</TableHead>
+                  <TableHead className="font-semibold">Categoria</TableHead>
+                  <TableHead className="text-right font-semibold">Valor</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {recentTransactions.map((transaction) => {
+                  const property = properties.find(p => p.id === transaction.propertyId);
+                  return (
+                    <TableRow key={transaction.id} className="hover:bg-gray-50 transition-colors">
+                      <TableCell className="font-medium">{new Date(transaction.date).toLocaleDateString('pt-BR')}</TableCell>
+                      <TableCell>{property?.name || 'N/A'}</TableCell>
+                      <TableCell>{transaction.description}</TableCell>
+                      <TableCell>
+                        <Badge 
+                          variant={transaction.type === 'income' ? 'default' : 'outline'} 
+                          className={
+                            transaction.type === 'income' 
+                              ? 'bg-green-100 text-green-800 hover:bg-green-100 border-green-200' 
+                              : 'text-red-800 border-red-200 bg-red-50 hover:bg-red-50'
+                          }
+                        >
+                          {transaction.category}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className={`text-right font-semibold ${
+                        transaction.type === 'income' ? 'text-green-600' : 'text-red-600'
+                      }`}>
+                        {transaction.type === 'income' ? '+' : '-'}
+                        R$ {transaction.value.toLocaleString()}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
+          <div className="mt-6 text-center">
+            <Button variant="outline" className="hover:bg-gray-50">
+              Ver todas as transações
+            </Button>
           </div>
         </CardContent>
       </Card>
