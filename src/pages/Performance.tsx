@@ -1,4 +1,3 @@
-
 import React from "react";
 import { BarChart3, TrendingUp, TrendingDown, Activity, Target, DollarSign } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,21 +5,21 @@ import { Badge } from '@/components/ui/badge';
 import PerformanceChart from '@/components/charts/PerformanceChart';
 
 const liquidityData = [
-  { month: 'Jan', value: 85 },
-  { month: 'Fev', value: 78 },
-  { month: 'Mar', value: 92 },
-  { month: 'Abr', value: 88 },
-  { month: 'Mai', value: 95 },
-  { month: 'Jun', value: 82 }
+  { name: 'Jan', value: 85 },
+  { name: 'Fev', value: 78 },
+  { name: 'Mar', value: 92 },
+  { name: 'Abr', value: 88 },
+  { name: 'Mai', value: 95 },
+  { name: 'Jun', value: 82 }
 ];
 
 const marketData = [
-  { month: 'Jan', value: 120 },
-  { month: 'Fev', value: 132 },
-  { month: 'Mar', value: 145 },
-  { month: 'Abr', value: 128 },
-  { month: 'Mai', value: 155 },
-  { month: 'Jun', value: 167 }
+  { name: 'Jan', value: 120 },
+  { name: 'Fev', value: 132 },
+  { name: 'Mar', value: 145 },
+  { name: 'Abr', value: 128 },
+  { name: 'Mai', value: 155 },
+  { name: 'Jun', value: 167 }
 ];
 
 export default function Performance() {
