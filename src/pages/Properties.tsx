@@ -46,6 +46,10 @@ const Properties = () => {
     setIsDialogOpen(false);
   };
 
+  const handleTypeChange = (value: string) => {
+    setPropertyType(value === 'all' ? undefined : value);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
@@ -83,12 +87,12 @@ const Properties = () => {
           />
         </div>
         <div className="flex gap-2">
-          <Select value={propertyType} onValueChange={setPropertyType}>
+          <Select value={propertyType || 'all'} onValueChange={handleTypeChange}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Tipo de imóvel" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Todos os tipos</SelectItem>
+              <SelectItem value="all">Todos os tipos</SelectItem>
               <SelectItem value="Apartamento">Apartamento</SelectItem>
               <SelectItem value="Casa">Casa</SelectItem>
               <SelectItem value="Comercial">Comercial</SelectItem>
