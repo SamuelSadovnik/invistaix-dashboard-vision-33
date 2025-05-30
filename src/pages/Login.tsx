@@ -39,11 +39,15 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 p-4 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-10 left-10 w-32 h-32 bg-green-400 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 bg-emerald-400 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-green-300 rounded-full blur-2xl"></div>
+      </div>
       
       <div className="w-full max-w-md relative z-10">
-        <Card className="border-0 shadow-2xl bg-white/95 backdrop-blur-xl">
+        <Card className="border-0 shadow-2xl bg-white/95 backdrop-blur-xl ring-1 ring-white/20">
           <CardHeader className="text-center space-y-6 pb-8">
             <div className="mx-auto w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg ring-4 ring-green-100">
               <Building2 className="h-10 w-10 text-white" />
@@ -52,9 +56,6 @@ const Login = () => {
               <CardTitle className="text-3xl font-bold bg-gradient-to-r from-green-700 to-emerald-600 bg-clip-text text-transparent mb-2">
                 InvistaIX
               </CardTitle>
-              <CardDescription className="text-gray-600 text-lg">
-                Gestão Inteligente de Imóveis
-              </CardDescription>
               <div className="w-20 h-1 bg-gradient-to-r from-green-500 to-emerald-400 mx-auto mt-3 rounded-full"></div>
             </div>
           </CardHeader>
