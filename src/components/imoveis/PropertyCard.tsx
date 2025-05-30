@@ -46,7 +46,7 @@ const PropertyCard = ({
   className,
 }: PropertyCardProps) => {
   return (
-    <Link to={`/imoveis/${id}`}>
+    <Link to={`/dashboard/imoveis/${id}`}>
       <Card className={cn("overflow-hidden hover-scale", className)}>
         <div className="relative h-48 w-full">
           {imageUrl ? (

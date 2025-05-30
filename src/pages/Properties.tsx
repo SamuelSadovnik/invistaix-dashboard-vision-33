@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/select';
 import { properties } from '@/data/mockData';
 import PropertyCard from '@/components/imoveis/PropertyCard';
+import AddPropertyForm from '@/components/imoveis/AddPropertyForm';
 import { 
   Dialog, 
   DialogContent, 
@@ -31,6 +32,7 @@ import {
 const Properties = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [propertyType, setPropertyType] = useState<string | undefined>(undefined);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   
   const filteredProperties = properties.filter(property => {
     const matchesSearch = property.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -40,6 +42,10 @@ const Properties = () => {
     return matchesSearch && matchesType;
   });
 
+  const handleFormSuccess = () => {
+    setIsDialogOpen(false);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
@@ -47,25 +53,21 @@ const Properties = () => {
           <h1 className="text-2xl md:text-3xl font-bold">Imóveis</h1>
           <p className="text-muted-foreground">Gerencie sua carteira de imóveis</p>
         </div>
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="invistaix-gradient">
               <Plus className="h-4 w-4 mr-2" />
               Cadastrar Imóvel
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px]">
+          <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Cadastrar Novo Imóvel</DialogTitle>
               <DialogDescription>
                 Preencha os detalhes do imóvel para adicioná-lo à sua carteira.
               </DialogDescription>
             </DialogHeader>
-            <div className="p-4">
-              <p className="text-center text-muted-foreground">
-                Formulário de cadastro seria implementado aqui
-              </p>
-            </div>
+            <AddPropertyForm onSuccess={handleFormSuccess} />
           </DialogContent>
         </Dialog>
       </div>
