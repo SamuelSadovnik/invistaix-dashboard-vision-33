@@ -108,9 +108,21 @@ export const ManagerDetailsDialog: React.FC<ManagerDetailsDialogProps> = ({
                         <span>{property.address}</span>
                       </div>
                       <div className="mt-2 text-sm">
-                        <span className="font-medium">Valor: </span>
-                        <span>R$ {property.value.toLocaleString('pt-BR')}</span>
+                        <span className="font-medium">Valor de Matrícula: </span>
+                        <span>R$ {property.matriculaValue.toLocaleString('pt-BR')}</span>
                       </div>
+                      {property.rentValue && (
+                        <div className="mt-1 text-sm">
+                          <span className="font-medium">Aluguel: </span>
+                          <span>R$ {property.rentValue.toLocaleString('pt-BR')}</span>
+                        </div>
+                      )}
+                      {property.saleValue && (
+                        <div className="mt-1 text-sm">
+                          <span className="font-medium">Valor de Venda: </span>
+                          <span>R$ {property.saleValue.toLocaleString('pt-BR')}</span>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
